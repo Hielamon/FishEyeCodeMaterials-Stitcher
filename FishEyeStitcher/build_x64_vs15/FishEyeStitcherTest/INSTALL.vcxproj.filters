@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\build_x64_vs15\CMakeFiles\27364ff7f29446aade2d8e154c2a2350\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{5D07EF6F-376E-3D0E-8979-7A68C114E9F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

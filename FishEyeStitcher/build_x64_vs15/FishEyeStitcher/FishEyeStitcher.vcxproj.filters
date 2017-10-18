@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\AdvanceWarpFish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\EstimateFish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FineMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishOptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishStitcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishStitcherMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\HDRMerger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\ORBMatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\ORBextractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\SequenceMatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\AdvanceWarpFish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\EstimateFish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\FineMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\FishCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\FishOptimizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\FishStitcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\FishStitcherMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\HDRMerger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\ORBMatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\ORBextractor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\OpencvCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\Ransac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\SequenceMatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\TraverFolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\char_and_wchar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4E8BDA9D-E9A1-3CB5-B072-32E560E88F47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2BD8F219-C311-3C7D-B9AB-331A14268438}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
