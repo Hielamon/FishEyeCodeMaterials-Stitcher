@@ -1,4 +1,6 @@
 #include <FishCamera.h>
+#include "CameraModel.h"
+#include "Rotation.h"
 
 namespace CircleFish
 {

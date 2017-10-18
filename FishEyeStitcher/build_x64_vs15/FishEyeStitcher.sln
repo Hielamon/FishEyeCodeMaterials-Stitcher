@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{9D93062E-291B-312D-BC4D-4BC70CC7772D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6215DF7F-82DE-31A8-A61C-63656E26EA50} = {6215DF7F-82DE-31A8-A61C-63656E26EA50}
@@ -14,6 +16,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FishEyeStitcher", "FishEyeS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FishEyeStitcherTest", "FishEyeStitcherTest\FishEyeStitcherTest.vcxproj", "{976370A9-BA3B-30E5-8C22-1A8577E80A9F}"
 	ProjectSection(ProjectDependencies) = postProject
+		{6215DF7F-82DE-31A8-A61C-63656E26EA50} = {6215DF7F-82DE-31A8-A61C-63656E26EA50}
 		{69D2EFC5-86A3-3B9D-A578-8C55FD7EF8BB} = {69D2EFC5-86A3-3B9D-A578-8C55FD7EF8BB}
 	EndProjectSection
 EndProject
@@ -24,8 +27,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "INSTALL", "INSTALL.vcxproj"
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{69D2EFC5-86A3-3B9D-A578-8C55FD7EF8BB}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,8 +53,7 @@ Global
 		{69D2EFC5-86A3-3B9D-A578-8C55FD7EF8BB}.Release|x64.ActiveCfg = Release|x64
 		{69D2EFC5-86A3-3B9D-A578-8C55FD7EF8BB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
