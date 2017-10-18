@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{59BCD90C-B47D-3C1B-94A3-BA9310B9D5F5}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>FishEyeStitcher</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\build_x64_vs15\bin\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">FishEyeStitcher.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">FishEyeStitcher</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\build_x64_vs15\bin\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">FishEyeStitcher.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">FishEyeStitcher</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;COST_TIME=1;CMAKE_INTDIR="Debug";FishEyeStitcher_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;COST_TIME=1;CMAKE_INTDIR=\"Debug\";FishEyeStitcher_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_core320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_calib3d320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_features2d320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_flann320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_highgui320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_imgproc320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_stitching320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_xfeatures2d320d.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_imgcodecs320d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15/bin/Debug/FishEyeStitcher.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15/bin/Debug/FishEyeStitcher.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;COST_TIME=1;CMAKE_INTDIR="Release";FishEyeStitcher_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;COST_TIME=1;CMAKE_INTDIR=\"Release\";FishEyeStitcher_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_core320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_calib3d320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_features2d320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_flann320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_highgui320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_imgproc320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_stitching320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_xfeatures2d320.lib;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\opencv_imgcodecs320.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15/bin/Release/FishEyeStitcher.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15/bin/Release/FishEyeStitcher.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/FishEyeStitcher/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-HD:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher" "-BD:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15" --check-stamp-file "D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\build_x64_vs15\FishEyeStitcher\CMakeFiles\generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/FishEyeStitcher/CMakeLists.txt;D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\CMakeLists.txt;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\OpenCVConfig-version.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\OpenCVConfig.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVConfig.cmake;C:\Program Files\CMake\share\cmake-3.7\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.7\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.7\Modules\CMakeParseArguments.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVModules.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVModules-debug.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVModules-release.cmake;D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\build_x64_vs15\FishEyeStitcher\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/FishEyeStitcher/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-HD:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher" "-BD:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15" --check-stamp-file "D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\build_x64_vs15\FishEyeStitcher\CMakeFiles\generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/FishEyeStitcher/CMakeLists.txt;D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\CMakeLists.txt;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\OpenCVConfig-version.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\OpenCVConfig.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVConfig.cmake;C:\Program Files\CMake\share\cmake-3.7\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.7\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.7\Modules\CMakeParseArguments.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVModules.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVModules-debug.cmake;D:\Code-Libraries\OpenCV\OpenCV320\OpenCV320_x64_VS15\install\x64\vc14\lib\OpenCVModules-release.cmake;D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\build_x64_vs15\FishEyeStitcher\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\AdvanceWarpFish.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\EstimateFish.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\FineMapping.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\FishCamera.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\FishOptimizer.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\FishStitcher.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\FishStitcherMain.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\HDRMerger.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\ORBMatcher.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\ORBextractor.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\OpencvCommon.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\Ransac.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\SequenceMatcher.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\TraverFolder.h" />
+    <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\include\char_and_wchar.h" />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\AdvanceWarpFish.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\EstimateFish.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\FineMapping.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\FishCamera.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\FishOptimizer.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\FishStitcher.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\FishStitcherMain.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\HDRMerger.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\ORBMatcher.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\ORBextractor.cpp"  />
+    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials\FishEyeStitcher\FishEyeStitcher\src\SequenceMatcher.cpp"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:/Academic-Research/My Papers/FishEyeCodeMaterials/FishEyeStitcher/build_x64_vs15/ZERO_CHECK.vcxproj">
+      <Project>F9356909-F440-38E4-98DC-343156654622</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
