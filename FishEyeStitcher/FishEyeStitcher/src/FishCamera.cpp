@@ -1,134 +1,18 @@
 #include <FishCamera.h>
-#include "CameraModel.h"
-#include "Rotation.h"
+
 
 namespace CircleFish
 {
 
-	FishCamera::FishCamera()
+	FishCamera::FishCamera() {}
+
+	FishCamera::FishCamera(const std::shared_ptr<CameraModel> & _pModel, const std::shared_ptr<Rotation> & _pRot)
 	{
-		radius = u0 = v0 = a = b = c = 0;
-		fov = CV_PI;
-		focal_l = 2 * radius / fov;
-		R = cv::Mat::eye(3, 3, CV_64F);
-	}
-
-	FishCamera::FishCamera(const FishCamera &other)
-	{
-		radius = other.radius;
-		u0 = other.u0;
-		v0 = other.v0;
-		fov = other.fov;
-		a = other.a;
-		b = other.b;
-		c = other.c;
-
-		focal_l = other.focal_l;
-
-		other.R.copyTo(R);
-	}
-
-	FishCamera::FishCamera(double c_radius, cv::Point center, double Fov, double _a, double _b, double _c)
-	{
-		radius = c_radius;
-		u0 = center.x;
-		v0 = center.y;
-		fov = Fov*CV_PI / 180;
-		a = _a;
-		b = _b;
-		c = _c;
-
-		focal_l = 2 * radius / fov;
-
-		R = cv::Mat::eye(3, 3, CV_64F);
+		pModel = _pModel;
+		pRot = _pRot;
 	}
 
 	FishCamera::~FishCamera() {}
-
-	FishCamera & FishCamera::operator =(const FishCamera &fc)
-	{
-		radius = fc.radius;
-		u0 = fc.u0;
-		v0 = fc.v0;
-		fov = fc.fov;
-		a = fc.a;
-		b = fc.b;
-		c = fc.c;
-
-		focal_l = fc.focal_l;
-
-		fc.R.copyTo(R);
-		return *this;
-	}
-
-	//解一元四次方程a*x^4+b*x^3+c*x^2+d*x+e=0的一个在-e附近的一个近似解
-	//先验信息为x的值在0~1之间
-	double solvequartic(double a, double b, double c, double d, double e)
-	{
-		double eps = 1e-8;
-		double x0 = -e;
-		double y0 = (((a*x0 + b)*x0 + c)*x0 + d)*x0 + e;
-		if (std::abs(y0) < eps)return x0;
-
-		double k0 = ((4 * a*x0 + 3 * b)*x0 + 2 * c)*x0 + d;
-		double init_step = y0*k0 < 0 ? 0.1 : -0.1;
-
-		double x1 = x0 + init_step;
-		double y1 = (((a*x1 + b)*x1 + c)*x1 + d)*x1 + e;
-
-		int iter_num = 0;
-		while (std::abs(y1) > eps && iter_num < 1000)
-		{
-			if (y1*y0 > 0)
-			{
-				x0 = x1;
-				y0 = y1;
-				x1 += init_step;
-			}
-			else
-			{
-				init_step *= 0.5;
-				x1 = x0 + init_step;
-			}
-
-			y1 = (((a*x1 + b)*x1 + c)*x1 + d)*x1 + e;
-			iter_num++;
-		}
-
-		return x1;
-	}
-
-	//将球面上的点投影到鱼眼图像
-	void mapS2I(const cv::Point3d &s_pt, const FishCamera &C, cv::Point2d &img_pt)
-	{
-		double theta = atan2(s_pt.y, s_pt.x);
-		double phi = atan2(sqrt(s_pt.x*s_pt.x + s_pt.y*s_pt.y), s_pt.z);
-		double r_udis_n = std::abs(phi * 2 / C.fov);
-		double d = 1 - C.a - C.b - C.c;
-		double r_dis_n = (((C.a*r_udis_n + C.b)*r_udis_n + C.c)*r_udis_n + d)*r_udis_n;
-		double r_dis = C.radius*r_dis_n;
-
-		img_pt.x = r_dis*cos(theta) + C.u0;
-		img_pt.y = -r_dis*sin(theta) + C.v0;
-	}
-
-	//将鱼眼图像上的点投影到球面
-	void mapI2S(const cv::Point2d &img_pt, const FishCamera &C, cv::Point3d &s_pt)
-	{
-		double x = img_pt.x - C.u0;
-		double y = -img_pt.y + C.v0;
-		double r_dis = sqrt(x*x + y*y);
-		double r_dis_n = r_dis / C.radius;
-
-		double r_udis_n = solvequartic(C.a, C.b, C.c, (1 - C.a - C.b - C.c), -r_dis_n);
-		double theta = atan2(y, x);
-
-		double phi = r_udis_n*C.fov*0.5;
-
-		s_pt.x = sin(phi)*cos(theta);
-		s_pt.y = sin(phi)*sin(theta);
-		s_pt.z = cos(phi);
-	}
 
 	void mapRotation(cv::Mat &R, cv::Mat &src, cv::Mat &dst)
 	{

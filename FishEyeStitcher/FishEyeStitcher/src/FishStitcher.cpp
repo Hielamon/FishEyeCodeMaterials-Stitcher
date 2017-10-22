@@ -72,6 +72,8 @@ namespace CircleFish
 		_getCircleRegion(images[0], circle_center, radius);
 
 		//Initialize the cameras
+		std::shared_ptr<CameraModel> pModel = std::static_pointer_cast<CameraModel>(
+			createCameraModel("GeyerModel", circle_center.x, circle_center.y, f, 0, maxRadius, iter->second[0], iter->second[1]));
 		std::vector<FishCamera> cameras(num_images);
 		for (size_t i = 0; i < num_images; i++)
 		{
@@ -79,8 +81,6 @@ namespace CircleFish
 			cameras[i].u0 = circle_center.x;
 			cameras[i].v0 = circle_center.y;
 			cameras[i].fov = 180 * CV_PI / 180;
-			//a,b,c initialized to 0
-			//cameras[i] = FishCamera(radius, circle_center, 180, 0, 0, 0);
 		}
 
 		//Estimate the intrinsic and external cameras' parameters
