@@ -103,7 +103,7 @@ namespace CircleFish
 
 
 		//directly get the warped images for blending
-		AdvanceWarpFish advancewarpfish(m_blend_size.height, !true);
+		AdvanceWarpFish advancewarpfish(m_blend_size.height, true);
 		advancewarpfish.process(images, cameras, index, estiamte.m_is_ring, blend_warpeds, blend_warped_masks, blend_corners);
 
 
