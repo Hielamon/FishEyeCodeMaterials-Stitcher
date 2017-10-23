@@ -53,7 +53,11 @@ public:
 		double theta, phi, r_dist;
 		theta = atan2(spherePt.y, spherePt.x);
 		phi = atan2(sqrt(spherePt.x*spherePt.x + spherePt.y*spherePt.y), spherePt.z);
-		if (phi * 2 > fov || !project(phi, r_dist))
+
+		if (phi * 2 > fov)
+			return false;
+
+		if (!project(phi, r_dist))
 		{
 			std::cout << "Warning: Invalid mapping in mapS2I" << std::endl;
 			return false;

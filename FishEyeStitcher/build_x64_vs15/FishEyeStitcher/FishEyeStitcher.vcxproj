@@ -172,6 +172,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\FishEyeStitcher\include\precomp.hpp" />
     <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\AdvanceWarpFish.h" />
     <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\EstimateFish.h" />
     <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\FineMapping.h" />
@@ -184,11 +185,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\ORBextractor.h" />
     <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\Ransac.h" />
     <ClInclude Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\include\SequenceMatcher.h" />
+    <ClCompile Include="..\..\FishEyeStitcher\src\levmarq.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\AdvanceWarpFish.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\EstimateFish.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FineMapping.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishCamera.cpp" />
-    <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishOptimizer.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishStitcher.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\FishStitcherMain.cpp" />
     <ClCompile Include="D:\Academic-Research\My Papers\FishEyeCodeMaterials-Stitcher\FishEyeStitcher\FishEyeStitcher\src\HDRMerger.cpp" />

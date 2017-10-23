@@ -13,10 +13,7 @@ namespace CircleFish
 	void EstimateFish::operator ()(std::vector<cv::Mat> &images, std::vector<FishCamera> &cameras, std::vector<int> &index)
 	{
 		int num_images = images.size();
-		double radius = cameras[0].radius;
-		cv::Point circle_center(cameras[0].u0, cameras[1].v0);
 		assert(num_images >= 2);
-		std::vector<FishCamera> cameras_bak = cameras;
 		double megapix = 1.0;
 		double match_scale = min(1.0, sqrt(megapix * 1e6 / images[0].size().area()));
 		cv::Size match_size(images[0].size().width*match_scale, images[0].size().height*match_scale);
@@ -30,11 +27,7 @@ namespace CircleFish
 		sequencematcher.process(match_images, pairinfos);
 		index.resize(pairinfos.size() + 1);
 
-		double ori_u0 = cameras[0].u0;
-		double ori_v0 = cameras[0].v0;
-
 		bad_threshold = 0.05;
-
 
 		bool is_ring = _initCompute(pairinfos, cameras, index);
 		//_showPairInfo(images, pairinfos, 1.0);
@@ -47,22 +40,19 @@ namespace CircleFish
 			std::list<PairInfo>::iterator ring_iter;
 			for (std::list<PairInfo>::iterator iter = pairinfos.begin(); iter != pairinfos.end(); iter++)
 				ring_iter = iter;
-			FishCamera ring_camera = cameras[index[0]];
+			FishCamera ring_camera(cameras[index[0]].pModel, std::make_shared<Rotation>(0, 0));
 			_ransacRotation(*ring_iter, ring_camera, bad_threshold);
-
 		}
 		//_showPairInfo(images, pairinfos, 1.0);
+		
 
-		FishOptimizer fishoptimizer;
+		std::string logFileName;
 
-		std::vector<bool> mask(6, true);
-		mask[1] = mask[3] = false;
+		_runOptimizer(pairinfos, cameras, index, true, logFileName, is_ring);
 
-		fishoptimizer.setMask(mask);
-		fishoptimizer.setParameters(pairinfos, cameras, !true);
-		fishoptimizer.optimizeProcess();
-		fishoptimizer.getCameras(cameras);
-
+		//Optimizing togather with Rotation
+		_runOptimizer(pairinfos, cameras, index, false, logFileName, is_ring);
+		
 		_alignCameras(cameras, index);
 		_stretchCameras(cameras);
 		//std::cout << "radius = " << cameras[0].radius << std::endl;
@@ -79,7 +69,6 @@ namespace CircleFish
 		assert(index.size() == cameras.size());
 		assert(pairinfos.size() == cameras.size() || cameras.size() == pairinfos.size() + 1);
 		index[0] = pairinfos.begin()->index1;
-		FishCamera common_c = cameras[index[0]];
 		int count = 1;
 		//cv::Mat pre_R = cameras[index[0]].R.clone();
 
@@ -99,12 +88,7 @@ namespace CircleFish
 			index[count] = index2;
 			_ransacRotation(*iter, cameras[index2], bad_threshold);
 
-			cv::Vec3d rvect;
-			cv::Rodrigues(cameras[index2].R, rvect);
-			total_theta += rvect[1];
-
-			//cameras[index2].R *= pre_R;
-			//pre_R = cameras[index2].R.clone();
+			total_theta += cameras[index2].pRot->axisAngle[1];
 		}
 
 		return std::abs(total_theta) > CV_PI*1.1 ? true : false;
@@ -117,8 +101,8 @@ namespace CircleFish
 		std::vector<cv::Point3d> threed2(pairinfo.pairs_num);
 		for (size_t i = 0; i < pairinfo.pairs_num; i++)
 		{
-			mapI2S(pairinfo.points1[i], camera, threed1[i]);
-			mapI2S(pairinfo.points2[i], camera, threed2[i]);
+			camera.pModel->mapI2S(pairinfo.points1[i], threed1[i]);
+			camera.pModel->mapI2S(pairinfo.points2[i], threed2[i]);
 			csp[i].resize(6);
 			csp[i][0] = threed1[i].x; csp[i][1] = threed1[i].y; csp[i][2] = threed1[i].z;
 			csp[i][3] = threed2[i].x; csp[i][4] = threed2[i].y; csp[i][5] = threed2[i].z;
@@ -126,9 +110,11 @@ namespace CircleFish
 		std::vector<char> inliers(pairinfo.pairs_num, 1);
 		RansacRotation rr(bad_thres, 0.999, 2000, false);
 		double inlier_rate = rr.run(csp, inliers);
-		rr.getRotation(camera.R);
+		cv::Mat R;
+		rr.getRotation(R);
+		camera.pRot->updataRotation(R);
+		
 		pairinfo.mask = inliers;
-
 
 		cv::Mat H = cv::Mat(3, 3, CV_64FC1, cv::Scalar(0));
 		double *H_ptr = reinterpret_cast<double *>(H.data);
@@ -154,7 +140,8 @@ namespace CircleFish
 		cv::Mat w, u, vt;
 		svd.compute(H, w, u, vt);
 
-		camera.R = vt.t()*u.t();
+		R = vt.t()*u.t();
+		camera.pRot->updataRotation(R);
 	}
 
 	void EstimateFish::_stretchCameras(std::vector<FishCamera> &cameras)
@@ -164,7 +151,7 @@ namespace CircleFish
 		img_k.at<double>(0, 0) = 1.0;
 		for (size_t i = 0; i < cameras.size(); ++i)
 		{
-			cv::Mat R_temp = cameras[i].R.t();
+			cv::Mat R_temp = cameras[i].pRot->R.t();
 			cv::Mat col = R_temp.col(2);
 
 			moment += col * col.t();
@@ -195,7 +182,9 @@ namespace CircleFish
 
 		R = R.t();
 		for (size_t i = 0; i < cameras.size(); i++)
-			cameras[i].R *= R;
+		{
+			cameras[i].pRot->updataRotation(cameras[i].pRot->R * R);
+		}
 	}
 
 	void EstimateFish::_alignCameras(std::vector<FishCamera> &cameras, std::vector<int> &index)
@@ -204,14 +193,14 @@ namespace CircleFish
 		rvec *= (-CV_PI*0.5);
 		cv::Mat rotate90;
 		cv::Rodrigues(rvec, rotate90);
-		cameras[index[0]].R *= rotate90;
+		cameras[index[0]].pRot->updataRotation(cameras[index[0]].pRot->R * rotate90);
 
-		cv::Mat pre_R = cameras[index[0]].R.clone();
+		cv::Mat pre_R = cameras[index[0]].pRot->R.clone();
 
 		for (size_t i = 1; i < index.size(); i++)
 		{
-			cameras[index[i]].R *= pre_R;
-			pre_R = cameras[index[i]].R.clone();
+			cameras[index[i]].pRot->updataRotation(cameras[index[i]].pRot->R * pre_R);
+			pre_R = cameras[index[i]].pRot->R.clone();
 		}
 	}
 
@@ -249,4 +238,45 @@ namespace CircleFish
 			index++;
 		}
 	}
+	
+	void EstimateFish::_runOptimizer(std::list<PairInfo> &pairinfos, std::vector<FishCamera> &cameras, std::vector<int> &index, 
+									 bool bRotationScheme, std::string &logFileName, bool is_ring)
+	{
+		std::shared_ptr<CameraModel> &pModel = cameras[index[0]].pModel;
+		std::vector<uchar> vMask(pModel->vpParameter.size(), 1);
+		vMask[0] = vMask[1] = 0;
+
+		cv::Ptr<FishCameraRefineCallback> cb = new FishCameraRefineCallback(pairinfos, cameras, vMask, bRotationScheme);
+		cv::Ptr<cv::LMSolver> levmarpPtr = customCreateLMSolver(cb, 200, 1e-15, 1e-15, logFileName);
+
+		int rotParamNum = bRotationScheme ? 0 : 3 * (index.size() - 1);
+		cv::Mat param(3 + rotParamNum, 1, CV_64FC1);
+		{
+			param.at<double>(0, 0) = *(pModel->vpParameter[2]);
+			param.at<double>(1, 0) = *(pModel->vpParameter[3]);
+			param.at<double>(2, 0) = *(pModel->vpParameter[4]);
+
+			if (!bRotationScheme)
+			{
+				std::list<PairInfo>::iterator pEndPair;
+				for (auto iter = pairinfos.begin(); iter != pairinfos.end(); iter++)
+					pEndPair = iter;
+				if (!is_ring)pEndPair = pairinfos.end();
+				int idx = 3;
+				for (auto iter = pairinfos.begin(); iter != pEndPair; iter++)
+				{
+					int index2 = iter->index2;
+					const std::shared_ptr<Rotation> & pRot = cameras[index2].pRot;
+					for (size_t j = 0; j < 3; j++)
+					{
+						param.at<double>(idx + j, 0) = pRot->axisAngle[j];
+					}
+					idx += 3;
+				}
+			}
+		}
+
+		levmarpPtr->run(param);
+	}
 }
+

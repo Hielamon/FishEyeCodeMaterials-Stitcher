@@ -522,18 +522,19 @@ namespace CircleFish
 		int sphere_mini = 500, half_shm = sphere_mini * 0.5;
 		double sphere_mini_aspect = m_sphere_height / (double)sphere_mini;
 
-		cv::Point2i center(cameras[0].u0, cameras[0].v0);
-		double radius = cameras[0].radius;
+		cv::Point2i center(cameras[0].pModel->u0, cameras[0].pModel->v0);
+		double radius = cameras[0].pModel->maxRadius;
 		cv::Mat origin_blend_mask;
 		{
 			origin_blend_mask = cv::Mat(src_arr[0].size(), CV_8UC1, cv::Scalar(0));
 			cv::circle(origin_blend_mask, center, radius, cv::Scalar(255), -1);
 		}
 
-		double half_fov = cameras[0].fov * 0.5;
+		double half_fov = cameras[0].pModel->fov * 0.5;
 		int src_width = src_arr[0].cols;
-		double r_theta = src_width - cameras[0].u0 > cameras[0].radius ? half_fov : half_fov*(src_width - cameras[0].u0) / cameras[0].radius;
-		double l_theta = cameras[0].u0 > cameras[0].radius ? half_fov : half_fov*cameras[0].u0 / cameras[0].radius;
+		
+		double r_theta = src_width - center.x> radius ? half_fov : half_fov*(src_width - center.x) / radius;
+		double l_theta = center.x > radius ? half_fov : half_fov*center.x / radius;
 
 		cv::Point3d right_pt(sin(r_theta), 0, cos(r_theta));
 		cv::Point3d left_pt(-sin(l_theta), 0, cos(l_theta));
@@ -553,7 +554,7 @@ namespace CircleFish
 				cv::imwrite(ss.str(), src_arr[index_temp]);
 			}
 			
-			double *R_ptr = (double *)cameras[index_temp].R.data;
+			double *R_ptr = (double *)cameras[index_temp].pRot->R.data;
 
 			border_pt[0] = cv::Point3d(R_ptr[0] * right_pt.x + R_ptr[6] * right_pt.z, R_ptr[1] * right_pt.x + R_ptr[7] * right_pt.z, R_ptr[2] * right_pt.x + R_ptr[8] * right_pt.z);
 			border_pt[1] = cv::Point3d(R_ptr[6], R_ptr[7], R_ptr[8]);

@@ -16,7 +16,7 @@ namespace CircleFish
 	class FishCamera
 	{
 	public:
-		FishCamera();
+		
 
 		FishCamera(const std::shared_ptr<CameraModel> & _pModel, const std::shared_ptr<Rotation> & _pRot);
 
@@ -24,9 +24,10 @@ namespace CircleFish
 
 		std::shared_ptr<CameraModel> pModel;
 		std::shared_ptr<Rotation> pRot;
-	};
 
-	void mapRotation(cv::Mat &R, cv::Mat &src, cv::Mat &dst);
+	private:
+		FishCamera();
+	};
 
 	void mapSP2I(cv::Point2d &sp_pt, cv::Point2d &img_pt, int sphere_height, const FishCamera &C);
 
