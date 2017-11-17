@@ -24,7 +24,7 @@ namespace CircleFish
 		(output) dst    : the stitched result
 		(return)        : whether stitching successfully
 		*/
-		bool operator ()(std::vector<cv::Mat> images, cv::Mat &result);
+		bool operator ()(std::vector<cv::Mat> images, bool do_fine_tune, cv::Mat &result);
 		
 
 	private:

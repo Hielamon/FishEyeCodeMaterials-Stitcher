@@ -2,10 +2,10 @@
 #include <iostream>
 
 //std::string dir = "test1";
-std::string dir = "D:/Academic-Research/Datas/ImageStitchingDatas/Hotel/test10";
+std::string dir = "D:/Academic-Research/Datas/ImageStitchingDatas/Hotel/test5";
 std::string name = "result.jpg";
 int result_h = 4000;
-bool do_hdr = !true;
+bool do_hdr = !true, do_fine_tune =true;
 int hdr_number = 3;
 std::string image_suffix = "jpg";
 
@@ -23,6 +23,8 @@ void PrintUsage()
     std::cout << "                         Set the number of a group images for HDR processing, Default set to 3" << std::endl;
     std::cout << "               -name name_value" << std::endl;
     std::cout << "                         Set the result name, Default set to 'result.jpg'" << std::endl;
+	std::cout << "               -fine_tune (yes|no)" << std::endl;
+	std::cout << "                         Set whether fine-tuning the misalignments, Default set to yes" << std::endl;
 }
  
 int parseCmdArgs(int argc, char** argv)
@@ -74,6 +76,14 @@ int parseCmdArgs(int argc, char** argv)
             name = std::string(argv[i + 1]);
             i++;
         }
+		else if (std::string(argv[i]) == "-fine_tune")
+		{
+			if (std::string(argv[i + 1]) == "yes")
+				do_fine_tune = true;
+			else if (std::string(argv[i + 1]) == "no")
+				do_fine_tune = false;
+			i++;
+		}
 		else
 		{
 			return 0;
@@ -92,7 +102,7 @@ int main(int argc, char *argv[])
 		PrintUsage();
         return -1;
     }
-	int result = FishStitcherMain(dir,name,image_suffix,result_h,do_hdr,hdr_number);
+	int result = FishStitcherMain(dir, name, image_suffix, result_h, do_fine_tune, do_hdr, hdr_number);
 	std::cout << "result num is : " << result << std::endl;
 	return 1;
 }

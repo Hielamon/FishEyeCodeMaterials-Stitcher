@@ -29,7 +29,7 @@ namespace CircleFish
 
 		void _showPairInfo(std::vector<cv::Mat> &images, std::list<PairInfo> &pairinfos, double scale);
 
-		void _runOptimizer(std::list<PairInfo> &pairinfos, std::vector<FishCamera> &cameras, std::vector<int> &index,
+		void _runOptimizer(std::list<PairInfo> &pairinfos, std::vector<FishCamera> &cameras, std::vector<uchar> &vMask, std::vector<int> &index,
 						   bool bRotationScheme, std::string &logFileName, bool is_ring);
 
 		double bad_threshold;

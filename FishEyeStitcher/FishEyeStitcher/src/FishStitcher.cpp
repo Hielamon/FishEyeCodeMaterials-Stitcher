@@ -52,7 +52,7 @@ namespace CircleFish
 
 	FishStitcher::~FishStitcher() {}
 
-	bool FishStitcher::operator ()(std::vector<cv::Mat> images, cv::Mat &result)
+	bool FishStitcher::operator ()(std::vector<cv::Mat> images, bool do_fine_tune, cv::Mat &result)
 	{
 #if COST_TIME
 		double duration;
@@ -77,9 +77,12 @@ namespace CircleFish
 		std::shared_ptr<Equidistant> baseModel = std::make_shared<Equidistant>(0, 0, 1, CV_PI);
 		double f = radius / baseModel->maxRadius;
 		cv::Vec2d args(0.976517, 1.743803);
+		std::string modelName = "GeyerModel";
+		/*cv::Vec2d args(1.000000, 0.000000);
+		std::string modelName = "PolynomialAngle";*/
 
 		std::shared_ptr<CameraModel> pModel = std::static_pointer_cast<CameraModel>(
-			createCameraModel("GeyerModel", circle_center.x, circle_center.y, f, 0, radius, args[0], args[1]));
+			createCameraModel(modelName, circle_center.x, circle_center.y, f, 0, radius, args[0], args[1]));
 		std::vector<FishCamera> cameras;
 		for (size_t i = 0; i < num_images; i++)
 		{
@@ -107,7 +110,7 @@ namespace CircleFish
 
 
 		//directly get the warped images for blending
-		AdvanceWarpFish advancewarpfish(m_blend_size.height, !true);
+		AdvanceWarpFish advancewarpfish(m_blend_size.height, do_fine_tune);
 		advancewarpfish.process(images, cameras, index, estiamte.m_is_ring, blend_warpeds, blend_warped_masks, blend_corners);
 
 

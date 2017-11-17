@@ -21,4 +21,4 @@
 //return 7,Failed to write the result. 
 //return 8,there some errors in the core stitching algorithm.                      
 int FISHSTITCHER_API FishStitcherMain(const std::string &dir, const std::string &name, const std::string &image_suffix, 
-					  int result_h, bool do_hdr, int hdr_number);
+					  int result_h, bool do_fine_tune, bool do_hdr, int hdr_number);

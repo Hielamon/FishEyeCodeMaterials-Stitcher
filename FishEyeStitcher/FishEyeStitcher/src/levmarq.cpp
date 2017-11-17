@@ -76,6 +76,8 @@
    POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define ITERATION_DETAIL 0
+
 namespace cv
 {
 
@@ -198,12 +200,14 @@ public:
             iter++;
             bool proceed = iter < maxIters && norm(d, NORM_INF) >= epsx && norm(r, NORM_INF) >= epsf;
 
+#if ITERATION_DETAIL
 			printf("iter=%d    error=%f    params=", iter, norm(r));
 			for (size_t i = 0; i < x.rows; i++)
 			{
 				printf("%f ", x.at<double>(i, 0));
 			}
 			printf("\n");
+#endif
 
 			if (isLog)
 			{

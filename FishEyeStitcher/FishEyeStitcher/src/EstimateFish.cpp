@@ -47,11 +47,15 @@ namespace CircleFish
 		
 
 		std::string logFileName;
+		std::shared_ptr<CameraModel> &pModel = cameras[index[0]].pModel;
+		std::vector<uchar> vMask(pModel->vpParameter.size(), 1);
+		vMask[0] = vMask[1] = 0;
 
-		_runOptimizer(pairinfos, cameras, index, true, logFileName, is_ring);
+		_runOptimizer(pairinfos, cameras, vMask, index, true, logFileName, is_ring);
 
 		//Optimizing togather with Rotation
-		_runOptimizer(pairinfos, cameras, index, false, logFileName, is_ring);
+		vMask[0] = vMask[1] = 1;
+		_runOptimizer(pairinfos, cameras, vMask, index, false, logFileName, is_ring);
 		
 		_alignCameras(cameras, index);
 		_stretchCameras(cameras);
@@ -239,22 +243,32 @@ namespace CircleFish
 		}
 	}
 	
-	void EstimateFish::_runOptimizer(std::list<PairInfo> &pairinfos, std::vector<FishCamera> &cameras, std::vector<int> &index, 
+	void EstimateFish::_runOptimizer(std::list<PairInfo> &pairinfos, std::vector<FishCamera> &cameras, std::vector<uchar> &vMask, std::vector<int> &index,
 									 bool bRotationScheme, std::string &logFileName, bool is_ring)
 	{
-		std::shared_ptr<CameraModel> &pModel = cameras[index[0]].pModel;
-		std::vector<uchar> vMask(pModel->vpParameter.size(), 1);
-		vMask[0] = vMask[1] = 0;
-
 		cv::Ptr<FishCameraRefineCallback> cb = new FishCameraRefineCallback(pairinfos, cameras, vMask, bRotationScheme);
 		cv::Ptr<cv::LMSolver> levmarpPtr = customCreateLMSolver(cb, 200, 1e-15, 1e-15, logFileName);
+		
+		std::shared_ptr<CameraModel> &pModel = cameras[index[0]].pModel;
+		assert(vMask.size() == pModel->vpParameter.size());
+
 
 		int rotParamNum = bRotationScheme ? 0 : 3 * (index.size() - 1);
-		cv::Mat param(3 + rotParamNum, 1, CV_64FC1);
+		int cameraParamNum = 0;
+		std::for_each(vMask.begin(), vMask.end(), [&](uchar &maski) {
+			if (maski == 1)cameraParamNum++;
+		});
+
+		cv::Mat param(cameraParamNum + rotParamNum, 1, CV_64FC1);
 		{
-			param.at<double>(0, 0) = *(pModel->vpParameter[2]);
-			param.at<double>(1, 0) = *(pModel->vpParameter[3]);
-			param.at<double>(2, 0) = *(pModel->vpParameter[4]);
+			int idx = 0; 
+			for (size_t i = 0; i < vMask.size(); i++)
+			{
+				if (vMask[i] == 1)
+				{
+					param.at<double>(idx++, 0) = *(pModel->vpParameter[i]);
+				}
+			}
 
 			if (!bRotationScheme)
 			{
@@ -262,7 +276,7 @@ namespace CircleFish
 				for (auto iter = pairinfos.begin(); iter != pairinfos.end(); iter++)
 					pEndPair = iter;
 				if (!is_ring)pEndPair = pairinfos.end();
-				int idx = 3;
+				
 				for (auto iter = pairinfos.begin(); iter != pEndPair; iter++)
 				{
 					int index2 = iter->index2;

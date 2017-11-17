@@ -512,7 +512,6 @@ namespace CircleFish
 		}
 	}
 
-
 	void AdvanceWarpFish::_initWarp(const std::vector<cv::Mat> &src_arr, std::vector<FishCamera> &cameras,
 		std::vector<int> &index, std::vector<cv::Mat> &blend_warpeds,
 		std::vector<cv::Mat> &blend_warped_masks, std::vector<cv::Point>& blend_corners,
