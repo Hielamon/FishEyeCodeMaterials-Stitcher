@@ -66,40 +66,87 @@ namespace CircleFish
 			return false;
 		}
 
-		std::cout << "\n.............Start calib cameras............." << std::endl;
+		
 
-		//Get the circle fisheye image's circle region
-		cv::Point2d circle_center;
-		double radius;
-		_getCircleRegion(images[0], circle_center, radius);
+		std::vector<FishCamera> cameras(num_images);
+		std::vector<int> index;
+		bool is_ring = false;
 
-		//Initialize the cameras
-		std::shared_ptr<Equidistant> baseModel = std::make_shared<Equidistant>(0, 0, 1, CV_PI);
-		double f = radius / baseModel->maxRadius;
-		cv::Vec2d args(0.976517, 1.743803);
-		std::string modelName = "GeyerModel";
-		/*cv::Vec2d args(1.000000, 0.000000);
-		std::string modelName = "PolynomialAngle";*/
-
-		std::shared_ptr<CameraModel> pModel = std::static_pointer_cast<CameraModel>(
-			createCameraModel(modelName, circle_center.x, circle_center.y, f, 0, radius, args[0], args[1]));
-		std::vector<FishCamera> cameras;
-		for (size_t i = 0; i < num_images; i++)
+		std::string tmpStateFName = "tempEstimatedState.xml";
+		cv::FileStorage fs(tmpStateFName, cv::FileStorage::READ);
+		if (fs.isOpened())
 		{
-			FishCamera camera(pModel, std::make_shared<Rotation>(0, 0));
-			cameras.push_back(camera);
+			//Load the estimated state which have been saved
+			std::cout << "\n.............Start load the estimated states from " << tmpStateFName << "............." << std::endl;
+			fs["is_ring"] >> is_ring;
+
+			for (size_t i = 0; i < num_images; i++)
+			{
+				cameras[i].LoadFromXML(fs, i);
+				//cameras[i].pModel = cameras[0].pModel;
+			}
+
+		}
+		else
+		{
+
+			//Get the circle fisheye image's circle region
+			cv::Point2d circle_center;
+			double radius;
+			_getCircleRegion(images[0], circle_center, radius);
+
+			//Initialize the cameras
+			std::shared_ptr<Equidistant> baseModel = std::make_shared<Equidistant>(0, 0, 1, CV_PI);
+			double f = radius / baseModel->maxRadius;
+			cv::Vec2d args(0.976517, 1.743803);
+			std::string modelName = "GeyerModel";
+			/*cv::Vec2d args(1.000000, 0.000000);
+			std::string modelName = "PolynomialAngle";*/
+
+			std::shared_ptr<CameraModel> pModel = std::static_pointer_cast<CameraModel>(
+				createCameraModel(modelName, circle_center.x, circle_center.y, f, 0, radius, args[0], args[1]));
+			
+			for (size_t i = 0; i < num_images; i++)
+			{
+				cameras[i].pModel = pModel;
+				cameras[i].pRot = std::make_shared<Rotation>(0, 0);
+			}
+
+			//Estimate the intrinsic and external cameras' parameters
+			std::cout << "\n.............Start calib cameras............." << std::endl;
+
+			EstimateFish estiamte;
+			estiamte(images, cameras, index);
+			is_ring = estiamte.m_is_ring;
+
+			//Save the estimated state 
+			std::cout << "\n.............Save the estimated states to "<< tmpStateFName << "............." << std::endl;
+			fs.open(tmpStateFName, cv::FileStorage::WRITE);
+			if (!fs.isOpened())
+			{
+				std::cout << "Failed to open the file " << tmpStateFName << " for save the estimated state" << std::endl;
+				exit(-1);
+			}
+
+			fs << "is_ring" << is_ring;
+
+			for (size_t i = 0; i < num_images; i++)
+			{
+				cameras[i].SaveToXML(fs, i);
+			}
+
 		}
 
-		//Estimate the intrinsic and external cameras' parameters
-		EstimateFish estiamte;
-		std::vector<int> index;
-		estiamte(images, cameras, index);
+		fs.release();
+			
 
 #if COST_TIME
 		duration = static_cast<double>(cv::getTickCount()) - duration;
 		std::cout << "Camera calibration cost time : " << 1000 * (duration / cv::getTickFrequency()) << " ms " << std::endl;
 		duration = static_cast<double>(cv::getTickCount());
 #endif
+
+
 
 		std::cout << "\n.............Warp and FineMapping............." << std::endl;
 
@@ -111,7 +158,7 @@ namespace CircleFish
 
 		//directly get the warped images for blending
 		AdvanceWarpFish advancewarpfish(m_blend_size.height, do_fine_tune);
-		advancewarpfish.process(images, cameras, index, estiamte.m_is_ring, blend_warpeds, blend_warped_masks, blend_corners);
+		advancewarpfish.process(images, cameras, index, is_ring, blend_warpeds, blend_warped_masks, blend_corners);
 
 
 #if COST_TIME

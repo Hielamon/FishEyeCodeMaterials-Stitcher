@@ -22,9 +22,8 @@ namespace CircleFish
 		for (int i = 0; i < num_images; i++)
 			cv::resize(images[i], match_images[i], match_size);
 
-		SequenceMatcher sequencematcher(SequenceMatcher::F_SIFT, 1.0 / match_scale);
-		std::list<PairInfo> pairinfos;
-		sequencematcher.process(match_images, pairinfos);
+		sequencematcher = std::make_shared<SequenceMatcher>(SequenceMatcher::F_SIFT, 1.0 / match_scale);
+		sequencematcher->process(match_images, pairinfos);
 		index.resize(pairinfos.size() + 1);
 
 		bad_threshold = 0.05;
@@ -33,7 +32,7 @@ namespace CircleFish
 		//_showPairInfo(images, pairinfos, 1.0);
 		m_is_ring = is_ring;
 		if (is_ring)
-			sequencematcher.getRingPair(pairinfos);
+			sequencematcher->getRingPair(pairinfos);
 
 		if (is_ring)
 		{

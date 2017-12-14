@@ -22,11 +22,11 @@ namespace CircleFish
 		std::shared_ptr<CameraModel> pModel;
 		std::shared_ptr<Rotation> pRot;
 
-		bool SaveToXML(cv::FileStorage &fs);
+		bool SaveToXML(cv::FileStorage &fs, int index = -1);
 
-		bool LoadFromXML(cv::FileStorage &fs);
+		bool LoadFromXML(cv::FileStorage &fs, int index = -1);
 
-	private:
+	//private:
 		FishCamera();
 	};
 

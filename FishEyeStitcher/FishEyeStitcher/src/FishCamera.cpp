@@ -14,50 +14,70 @@ namespace CircleFish
 
 	FishCamera::~FishCamera() {}
 
-	bool FishCamera::SaveToXML(cv::FileStorage &fs)
+	bool FishCamera::SaveToXML(cv::FileStorage &fs, int index)
 	{
 		//Save the CameraModel info
 		if (!fs.isOpened() || pModel.use_count() == 0 ||
 			pRot.use_count() == 0) return false;
 
-		fs << "CModelName" << pModel->getTypeName();
-		fs << "f" << pModel->f << "u0" << pModel->u0 << "v0" << pModel->v0;
-		fs << "fov" << pModel->fov << "maxRadius" << pModel->maxRadius;
+		std::string indexStr = "";
+		std::stringstream ioStr;
+		if (index >= 0)
+		{
+			ioStr.str("");
+			ioStr << "_C" << index;
+			indexStr = ioStr.str();
+		}
+		
+
+		fs << "CModelName" + indexStr << pModel->getTypeName();
+		fs << "f" + indexStr << pModel->f << "u0" + indexStr << pModel->u0 << "v0" + indexStr << pModel->v0;
+		fs << "fov" + indexStr << pModel->fov << "maxRadius" + indexStr << pModel->maxRadius;
 		int extraParamNum = pModel->vpParameter.size() - 3;
 		assert(extraParamNum == 0 || extraParamNum == 2);
-		fs << "extraParamNum" << extraParamNum;
-		std::stringstream ioStr;
+		fs << "extraParamNum" + indexStr << extraParamNum;
+		
 		for (size_t i = 3; i < pModel->vpParameter.size(); i++)
 		{
 			ioStr.str("");
-			ioStr << "arg" << i;
-			fs << ioStr.str() << pModel->vpParameter[i];
+			ioStr <<  "arg_" << i << indexStr;
+			fs << ioStr.str() << *(pModel->vpParameter[i]);
 		}
 
 		//Save the Rotation
-		fs << "RotationMat" << pRot->R;
+		fs << "RotationMat" + indexStr << pRot->R;
+
+		return true;
 	}
 
-	bool FishCamera::LoadFromXML(cv::FileStorage &fs)
+	bool FishCamera::LoadFromXML(cv::FileStorage &fs, int index)
 	{
 		if (!fs.isOpened()) return false;
 
+		std::string indexStr = "";
+		std::stringstream ioStr;
+		if (index >= 0)
+		{
+			ioStr.str("");
+			ioStr << "_C" << index;
+			indexStr = ioStr.str();
+		}
+
 		//Load the CameraModel info
 		std::string CModelName;
-		fs["CModelName"] >> CModelName;
+		fs["CModelName" + indexStr] >> CModelName;
 		double f, u0, v0, fov, maxRadius;
-		fs["f"] >> f; fs["u0"] >> u0; fs["v0"] >> v0;
-		fs["fov"] >> fov; fs["maxRadius"] >> maxRadius;
+		fs["f" + indexStr] >> f; fs["u0" + indexStr] >> u0; fs["v0" + indexStr] >> v0;
+		fs["fov" + indexStr] >> fov; fs["maxRadius" + indexStr] >> maxRadius;
 
 		int extraParamNum;
-		fs["extraParamNum"] >> extraParamNum;
+		fs["extraParamNum" + indexStr] >> extraParamNum;
 		assert(extraParamNum == 0 || extraParamNum == 2);
 		double args[2] = { 0 , 0 };
-		std::stringstream ioStr;
 		for (size_t i = 0; i < extraParamNum; i++)
 		{
 			ioStr.str("");
-			ioStr << "arg" << i;
+			ioStr << "arg_" << i + 3 << indexStr;
 			fs[ioStr.str()] >> args[i];
 		}
 
@@ -65,8 +85,10 @@ namespace CircleFish
 
 		//Load the Rotation
 		cv::Mat R;
-		fs["RotationMat"] >> R;
+		fs["RotationMat" + indexStr] >> R;
 		pRot = std::make_shared<Rotation>(R);
+
+		return true;
 	}
 
 	void mapSP2I(cv::Point2d &sp_pt, cv::Point2d &img_pt, int sphere_height, const FishCamera &C)
