@@ -2,7 +2,7 @@
 #include <iostream>
 
 //std::string dir = "test1";
-std::string dir = "D:/Academic-Research/Datas/ImageStitchingDatas/Hotel/test5";
+std::string dir = "D:/Academic-Research/Datas/ImageStitchingDatas/Hotel/test12";
 std::string name = "result.jpg";
 int result_h = 4000;
 bool do_hdr = !true, do_fine_tune =true;

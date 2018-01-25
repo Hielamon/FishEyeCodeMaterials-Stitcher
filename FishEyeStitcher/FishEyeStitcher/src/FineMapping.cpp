@@ -170,7 +170,7 @@ namespace CircleFish
 		GridShift aGridShift1(mnRowNum);
 
 		//Used for record the block which get its motion from template matching
-		GridFlag aGridFlag(mnRowNum);
+		GridFlag aGridFlag(mnRowNum,false);
 
 		_fillGridShift(aGridShift1, aGridFlag, kap1.first, kap2.first, vnMatches12);
 
@@ -490,7 +490,9 @@ namespace CircleFish
 		cv::Vec2i init_motion = cv::Vec2f(0, 0);
 		cv::Vec2f &motion = aGridShift[r];
 		motion = cv::Vec2f(std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN());
+		//return;
 
+		//Exclude the black region in mask
 		cv::Mat grid_mask1 = mmask1(grid_roi);
 		if (CheckMask(grid_mask1))return;
 

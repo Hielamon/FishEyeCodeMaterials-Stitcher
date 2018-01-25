@@ -56,3 +56,5 @@ protected:
 
 };
 
+void DrawPairInfos(std::vector<cv::Mat> &images, std::list<PairInfo> &pairinfos, bool onlyPoints = false, double scale = 1.0);
+

@@ -63,7 +63,8 @@ namespace CircleFish
 		//std::cout << "b = " << cameras[0].b << std::endl;
 		//std::cout << "c = " << cameras[0].c << std::endl;
 		//std::cout << "fov = " << cameras[0].fov << std::endl;
-		_showPairInfo(images, pairinfos, 1.0);
+		DrawPairInfos(images, pairinfos, true, 1.0);
+		//_showPairInfo(images, pairinfos, 1.0);
 	}
 
 	//初始化计算相机相对姿态R矩阵，如果鱼眼图像覆盖360以上，或者说满足大致的4张90度转条件，返回true，否则返回false

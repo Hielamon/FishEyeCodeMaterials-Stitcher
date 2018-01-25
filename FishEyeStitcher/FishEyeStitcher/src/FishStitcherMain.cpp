@@ -121,7 +121,7 @@ int FishStitcherMain(const std::string &dir, const std::string &name, const std:
 	CircleFish::FishStitcher fishstitcher(result_h);
 	cv::Mat result;
 
-	if (fishstitcher(images, do_fine_tune, result))
+	if (fishstitcher(images, do_fine_tune, dir, result))
 	{
 		size_t pos = dir.rfind('\\');
 		std::string final_name;

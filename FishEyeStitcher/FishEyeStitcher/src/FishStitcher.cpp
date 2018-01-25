@@ -7,7 +7,7 @@ using namespace FishEye;
 
 namespace CircleFish
 {
-	bool SaveWarpedInfos(const std::vector<cv::Mat>& blend_warpeds, const std::vector<cv::Mat>& blend_warped_masks,
+	inline bool SaveWarpedInfos(const std::vector<cv::Mat>& blend_warpeds, const std::vector<cv::Mat>& blend_warped_masks,
 						const std::vector<cv::Point> &blend_corners, const std::string &fName)
 	{
 		assert(blend_corners.size() == blend_warpeds.size() && blend_corners.size() == blend_warped_masks.size());
@@ -52,7 +52,7 @@ namespace CircleFish
 
 	FishStitcher::~FishStitcher() {}
 
-	bool FishStitcher::operator ()(std::vector<cv::Mat> images, bool do_fine_tune, cv::Mat &result)
+	bool FishStitcher::operator ()(std::vector<cv::Mat> images, bool do_fine_tune, const std::string &saveDir, cv::Mat &result)
 	{
 #if COST_TIME
 		double duration;
@@ -72,18 +72,19 @@ namespace CircleFish
 		std::vector<int> index;
 		bool is_ring = false;
 
-		std::string tmpStateFName = "tempEstimatedState.xml";
+		std::string tmpStateFName = saveDir + "/tempEstimatedState.xml";
 		cv::FileStorage fs(tmpStateFName, cv::FileStorage::READ);
 		if (fs.isOpened())
 		{
 			//Load the estimated state which have been saved
 			std::cout << "\n.............Start load the estimated states from " << tmpStateFName << "............." << std::endl;
 			fs["is_ring"] >> is_ring;
+			fs["index"] >> index;
 
 			for (size_t i = 0; i < num_images; i++)
 			{
 				cameras[i].LoadFromXML(fs, i);
-				//cameras[i].pModel = cameras[0].pModel;
+				cameras[i].pModel = cameras[0].pModel;
 			}
 
 		}
@@ -129,6 +130,7 @@ namespace CircleFish
 			}
 
 			fs << "is_ring" << is_ring;
+			fs << "index" << index;
 
 			for (size_t i = 0; i < num_images; i++)
 			{

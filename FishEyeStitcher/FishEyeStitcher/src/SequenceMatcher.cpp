@@ -1,4 +1,6 @@
 #include <SequenceMatcher.h>
+#include <opencv2\imgproc.hpp>
+#include <opencv2\highgui.hpp>
 
 SequenceMatcher::SequenceMatcher(const FeatureType &featuretype, float scale)
 {
@@ -267,4 +269,49 @@ float SequenceMatcher::_getInlierRate(const std::vector<char>& inliers)
 		if (inliers[i] != 0)n++;
 	}
 	return n / (float)inliers.size();
+}
+
+//Draw the Pair Infos for inputs
+void DrawPairInfos(std::vector<cv::Mat> &images, std::list<PairInfo> &pairinfos, bool onlyPoints, double scale)
+{
+	size_t pair_num = pairinfos.size();
+	std::string name = "pairs_";
+	std::stringstream ss;
+	int index = 0;
+
+	int ptRadius = 12, ptThickness = 2, lineThickness = 5;
+
+	for (std::list<PairInfo>::iterator iter = pairinfos.begin(); iter != pairinfos.end(); iter++)
+	{
+
+		int index0 = iter->index1, index1 = iter->index2;
+		assert(images[index0].type() == images[index1].type());
+		int resultType = images[iter->index1].type();
+		cv::Size imgSize0(images[index0].size()), imgSize1(images[index1].size());
+		cv::Size resultSize(imgSize0.width + imgSize1.width, std::max(imgSize0.height, imgSize1.height));
+
+		cv::Mat result(resultSize, resultType, cv::Scalar(0));;
+		images[index0].copyTo(result(cv::Rect(0, 0, imgSize0.width, imgSize0.height)));
+		images[index1].copyTo(result(cv::Rect(imgSize0.width, 0, imgSize1.width, imgSize1.height)));
+
+		for (size_t i = 0; i < iter->pairs_num; i++)
+		{
+			if (iter->mask[i] != 1)continue;
+			uchar r = rand() % 255;
+			uchar g = rand() % 255;
+			uchar b = rand() % 255;
+			cv::Scalar color(b, g, r);
+			cv::circle(result, iter->points1[i] * scale, ptRadius, color, ptThickness);
+			cv::Point2d pt2 = iter->points2[i] * scale;
+			pt2.x += imgSize0.width;
+			if (!onlyPoints)cv::line(result, iter->points1[i] * scale, pt2, color, lineThickness);
+			cv::circle(result, pt2, ptRadius, color, ptThickness);
+			//cv::imshow("showtemp", result);
+			//cv::waitKey(0);
+		}
+		ss << index;
+		cv::imwrite(name + ss.str() + ".jpg", result);
+		ss.str("");
+		index++;
+	}
 }
