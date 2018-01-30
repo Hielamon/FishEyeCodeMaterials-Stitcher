@@ -169,7 +169,7 @@ namespace CircleFish
 		duration = static_cast<double>(cv::getTickCount());
 #endif
 
-		//SaveWarpedInfos(blend_warpeds, blend_warped_masks, blend_corners, "warpedInfos.txt");
+		SaveWarpedInfos(blend_warpeds, blend_warped_masks, blend_corners, "warpedInfos.txt");
 
 		//Finish the finally blend manipulation
 		_blendCompute(blend_warpeds, blend_warped_masks, blend_corners, m_blend_size, result);
